@@ -8,11 +8,33 @@
     <artifactId>webstore</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <properties>
+        <java-version>1.7</java-version>
+        <org.springframework-version>4.0.3.RELEASE</org.springframework-version>
+        <org.aspectj-version>1.6.10</org.aspectj-version>
+        <org.slf4j-version>1.6.6</org.slf4j-version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <jdk.version>1.8</jdk.version>
+        <!--jersey.version>2.22.2</jersey.version-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>4.0.3.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.0.3.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -26,13 +48,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <jdk.version>1.8</jdk.version>
-        <!--jersey.version>2.22.2</jersey.version-->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
     <build>
         <finalName>webstore</finalName>
         <plugins>
@@ -41,8 +56,11 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
+                    <compilerArgs>
+                        <arg>-g</arg>
+                    </compilerArgs>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -52,6 +70,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.3.8.v20160314</version>
                 <configuration>
+                    <jvmArgs>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044</jvmArgs>
                     <stopKey>CTRL+C</stopKey>
                     <stopPort>8999</stopPort>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
