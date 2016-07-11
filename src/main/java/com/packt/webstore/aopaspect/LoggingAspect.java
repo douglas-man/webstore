@@ -15,13 +15,13 @@ public class LoggingAspect {
     private static final Logger logger =
             LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Pointcut("execution(* com.packt.webstore.service.OrderService.processOrder(..))")
-    public void ServicePointcut() {
+    @Pointcut("execution(* com.packt.webstore.service.OrderService.processOrder(String, long)) && args(productId, count)")
+    public void ServicePointcut(String productId, long count) {
 
     }
 
-    @Before("ServicePointcut()")
-    public void logServiceCalls() {
-        logger.info("processOrder() is executed, value {}", "dman");
+    @Before("ServicePointcut(productId, count)")
+    public void logServiceCalls(String productId, long count) {
+        logger.info("processOrder() is executed, value {}", productId);
     }
 }
