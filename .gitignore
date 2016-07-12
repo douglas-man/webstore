@@ -1,1 +1,13 @@
+<<<<<<< HEAD
+=======
+# IntelliJ project files
+.idea
+*.iml
+
+# gradle
+.gradle
+build
+
+# maven
+>>>>>>> 3082aeaabd5c1cb59d29e4196f0afc48135219d7
 target
