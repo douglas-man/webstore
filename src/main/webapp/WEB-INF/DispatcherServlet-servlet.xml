@@ -19,6 +19,6 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<bean class="com.packt.webstore.aopaspect.LoggingAspect" />
+	<bean class="com.packt.webstore.aopaspect.LogInfoAspect" />
 
 </beans>
