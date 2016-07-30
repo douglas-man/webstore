@@ -1,6 +1,8 @@
 package com.packt.webstore.aopaspect;
 
 
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -20,8 +22,9 @@ public class LoggingAspect {
 
     }
 
-    @Before("ServicePointcut(productId, count)")
-    public void logServiceCalls(String productId, long count) {
+    @Around("ServicePointcut(productId, count)")
+    public void logServiceCalls(ProceedingJoinPoint call, String productId, long count) throws Throwable {
         logger.info("processOrder() is executed, value {}", productId);
+        call.proceed();
     }
 }
