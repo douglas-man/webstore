@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.Object;
+import java.util.Arrays;
+
 /**
  * Created by dman on 7/11/16.
  */
@@ -24,10 +26,11 @@ public class LogInfoAspect {
 
     @Before("ServicePointcut()")
     public void logServiceCalls(JoinPoint call/*, String productId, long count*/) /*throws Throwable*/ {
-        Object[] arguments = call.getArgs();
+        String arguments = Arrays.toString(call.getArgs());
         Object target = call.getTarget();
 
-        logger.info("{} Service is Called...", target.getClass().getName());
-        logger.info("{} is executed, value {}", call.getSignature().getName(), arguments[0]);
+        logger.info("{} Service is Called...\n " +
+                " {} is executed, with {}", target.getClass().getName(), call.getSignature().getName());
+//        logger.info("\n{} is executed, value {}", call.getSignature().getName(), arguments[0]);
     }
 }

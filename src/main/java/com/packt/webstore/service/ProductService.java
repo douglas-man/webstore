@@ -13,10 +13,12 @@ import java.util.StringJoiner;
 public interface ProductService {
     List<Product> getAllProducts();
     List<Product> getProductsByCategory(String category);
+    List<Product> getProductsByManufacturer(String manufacturer);
     Set<Product> getProductsByFilter(Map<String, List<String>> filterParams);
     Product getProductById(String productID);
 //
 //    List<Product> getProductsByCategory(String category);
 //
 //    Set<Product> getProductsByFilter(Map<String, List<String>> filterParams);
+    void addProduct(Product product);
 }

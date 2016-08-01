@@ -13,6 +13,9 @@ import java.util.Set;
 public interface ProductRepository {
     List<Product> getAllProducts();
     List<Product> getProductsByCategory(String category);
+    List<Product> getProductsByManufacturer(String manufacturer);
     Set<Product> getProductsByFilter(Map<String, List<String>> filterParams);
     Product getProductById(String productID);
+
+    void addProduct(Product product);
 }
