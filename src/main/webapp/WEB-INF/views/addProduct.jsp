@@ -29,7 +29,21 @@ bootstrap.min.css">
                         <form:input id="productId" path="productId" type="text" class="form:input-large" />
                     </div>
                 </div>
-                <!-- Similarly bind form:input tag for name, unitPrice, manufacturer, category, unitsInStock and unitsInOrder fields-->
+				<div class="form-group">
+					<label class="control-label col-lg-2" for="name">name</label>
+					<div class="col-lg-10">
+						<form:input id="name" path="name" type="text" class="form:input-large"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-lg-2" for="unitPrice">Unit price</label>
+					<div class="col-lg-10">
+						<div class="form:input-prepend">
+							<form:input id="unitPrice" path="unitPrice" type="text" class="form:input-large"/>
+						</div>
+					</div>
+				</div>
 
                 <div class="form-group">
                     <label class="control-label col-lg-2" for="description">Description</label>
@@ -37,6 +51,37 @@ bootstrap.min.css">
                         <form:textarea id="description" path= "description" rows = "2"/>
                     </div>
                 </div>
+
+				<div class="form-group">
+					<label class="control-label col-lg-2" for="manufacturer">Manufacturer</label>
+					<div class="col-lg-10">
+						<form:input id="manufacturer" path="manufacturer" type="text" class="form:input-large"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-lg-2" for="category">Category</label>
+					<div class="col-lg-10">
+						<form:input id="category" path="category" type="text" class="form:input-large"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-lg-2" for="unitsInStock">Units In
+						Stock</label>
+					<div class="col-lg-10">
+						<form:input id="unitsInStock" path="unitsInStock" type="text" class="form:input-large"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-lg-2" for="unitsInOrder">Units In
+						Order</label>
+					<div class="col-lg-10">
+						<form:input id="unitsInOrder" path="unitsInOrder" type="text" class="form:input-large"/>
+					</div>
+				</div>
+
                 <div class="form-group">
                     <label class="control-label col-lg-2" for="discontinued">Discontinued</label>
                     <div class="col-lg-10">
