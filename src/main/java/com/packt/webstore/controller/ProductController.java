@@ -8,11 +8,16 @@ import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+
+import static org.springframework.util.StringUtils.arrayToCommaDelimitedString;
 
 /**
  * Created by dman on 7/7/16.
@@ -50,7 +55,7 @@ public class ProductController {
     }
 
     @RequestMapping("/filter/{ByCriteria}")
-    public String getProductsByFilter(@MatrixVariable(pathVar= "ByCriteria") Map<String, List<String>> filterParams, Model model) {
+    public String getProductsByFilter(@MatrixVariable(pathVar = "ByCriteria") Map<String, List<String>> filterParams, Model model) {
         model.addAttribute("products", productService.getProductsByFilter(filterParams));
         return "products";
     }
@@ -62,15 +67,26 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String getAddNewProductForm(Model model) {
-        Product newProduct = new Product();
-        model.addAttribute("newProduct", newProduct);
+    public String getAddNewProductForm(@ModelAttribute("newProduct") Product newProduct) {
+//        Product newProduct = new Product();
+//        model.addAttribute("newProduct", newProduct);
         return "addProduct";
     }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddNewProductForm(
-            @ModelAttribute("newProduct") Product newProduct) {
+            @ModelAttribute("newProduct") Product newProduct,
+            BindingResult result) {
+        String[] suppressedFields = result.getSuppressedFields();
+        if (suppressedFields.length > 0) {
+            throw new RuntimeException("Attempting to bind disallowed fields: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
+        }
         productService.addProduct(newProduct);
         return "redirect:/products";
+    }
+
+    @InitBinder
+    public void initialiseBinder(WebDataBinder binder) {
+        binder.setDisallowedFields("unitsInOrder", "discontinued");
     }
 }
