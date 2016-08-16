@@ -5,6 +5,7 @@ import com.packt.webstore.domain.repository.ProductRepository;
 import com.packt.webstore.service.ProductService;
 import com.sun.org.apache.regexp.internal.StreamCharacterIterator;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -76,17 +80,34 @@ public class ProductController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddNewProductForm(
             @ModelAttribute("newProduct") Product newProduct,
-            BindingResult result) {
+            BindingResult result, HttpServletRequest request) {
         String[] suppressedFields = result.getSuppressedFields();
         if (suppressedFields.length > 0) {
             throw new RuntimeException("Attempting to bind disallowed fields: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
         }
+
+        MultipartFile productImage = newProduct.getProductImage();
+        String rootDirectory = request.getSession().getServletContext().getRealPath("/home/dman/Pictures/");
+
+        if (productImage != null && !productImage.isEmpty()) {
+            try {
+                productImage.transferTo(new File(rootDirectory+"resources/images/"+newProduct.getProductId() + ".png"));
+            } catch (Exception e) {
+                throw new RuntimeException("Product Image saving failed", e);
+            }
+        }
+
+
         productService.addProduct(newProduct);
         return "redirect:/products";
     }
 
     @InitBinder
     public void initialiseBinder(WebDataBinder binder) {
-        binder.setDisallowedFields("unitsInOrder", "discontinued");
+
+        // binder.setDisallowedFields("unitsInOrder", "discontinued");
+        binder.setAllowedFields("productId",
+                "name","unitPrice","description","manufacturer",
+                "category","unitsInStock", "productImage");
     }
 }
