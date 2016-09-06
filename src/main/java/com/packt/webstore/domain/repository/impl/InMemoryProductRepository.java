@@ -2,8 +2,12 @@ package com.packt.webstore.domain.repository.impl;
 
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.domain.repository.ProductRepository;
+import com.packt.webstore.exception.ProductNotFoundException;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -73,14 +77,15 @@ public class InMemoryProductRepository implements
         Product productById = null;
 
         for(Product product : listOfProducts) {
-            if(product.getProductId().equals(productId)) {
+            if(product != null && product.getProductId() != null &&
+                    product.getProductId().equals(productId)) {
                 productById = product;
                 break;
             }
         }
 
         if (productById == null) {
-            throw new IllegalArgumentException("No Products found with the product id: "+ productId);
+            throw new ProductNotFoundException("No Products found with the product id: "+ productId);
         }
 
         return productById;

@@ -1,13 +1,17 @@
 package com.packt.webstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.math.BigDecimal;
 //import java.util.Optional;
 
 /**
  * Created by dman on 7/7/16.
  */
+@XmlRootElement
 public class Product {
 
     private String productId;
@@ -21,6 +25,7 @@ public class Product {
     private boolean discontinued;
     private String condition;
 
+    @JsonIgnore
     private MultipartFile productImage;
 
     public Product() {
@@ -149,6 +154,7 @@ public class Product {
         return productImage;
     }
 
+    @XmlTransient
     public void setProductImage(MultipartFile productImage) {
         this.productImage = productImage;
     }
