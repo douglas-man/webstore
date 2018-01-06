@@ -14,11 +14,11 @@ public class HomeController {
         model.addAttribute("greeting", "Welocme to Web Store!");
         model.addAttribute("tagline", "The one and only amazing web store");
 
-        return "welocme";
+        return "welcome";
     }
 
-    @RequestMapping("/welcome/greeting")
-    public String greeting() {
-        return "welocme";
-    }
+    // @RequestMapping("/welcome/greeting")
+    // public String greeting() {
+    //     return "welcome";
+    // }
 }
