@@ -57,20 +57,34 @@ public class CartRestController {
         String sessionId = request.getSession(true).getId();
 
         Cart cart = cartService.read(sessionId);
-        if (cart == null)
-
-        {
+        if (cart == null) {
             cart = cartService.create(new Cart(sessionId));
         }
 
         Product product = productService.getProductById(productId);
-        if (product == null)
-
-        {
+        if (product == null) {
             throw new IllegalArgumentException(new ProductNotFoundException(productId));
         }
 
+        cart.addCartItem(new CartItem(product));
+        cartService.update(sessionId, cart);
+    }
+
+    @RequestMapping(value = "/remove/{productId}", method = RequestMethod.PUT)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void removeItem(@PathVariable String productId,
+                           HttpServletRequest request) {
+        String sessionId = request.getSession(true).getId();
+        Cart cart = cartService.read(sessionId);
+        if(cart== null) {
+            cart = cartService.create(new Cart(sessionId));
+        }
+        Product product = productService.getProductById(productId);
+        if(product == null) {
+            throw new IllegalArgumentException(new ProductNotFoundException(productId));
+        }
         cart.removeCartItem(new CartItem(product));
+
         cartService.update(sessionId, cart);
     }
 
