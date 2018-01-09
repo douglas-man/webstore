@@ -10,20 +10,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class LoginController {
+    private static final String LOGIN = "login";
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-        return "login";
+        return LOGIN;
     }
 
     @RequestMapping(value = "/loginfailed", method =
             RequestMethod.GET)
     public String loginerror(Model model) {
         model.addAttribute("error", "true");
-        return "login";
+        return LOGIN;
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(Model model) {
-        return "login";
+        return LOGIN;
     }
 }

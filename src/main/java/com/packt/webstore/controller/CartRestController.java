@@ -91,11 +91,13 @@ public class CartRestController {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Illegal request, please verify your payload")
     public void handleClientErrors(Exception ex) {
+        /* TODO */
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR,
             reason = "Internal server error")
     public void handleServerErrors(Exception ex) {
+        /* TODO */
     }
 }
