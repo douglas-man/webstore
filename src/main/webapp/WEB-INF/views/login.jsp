@@ -9,7 +9,7 @@
          href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
       <title>Products</title>
    </head>
-   <body>
+   <body onload='document.f.username.focus();'>
       <section>
          <div class="jumbotron">
             <div class="container">
@@ -33,19 +33,20 @@
                            <br />
                         </div>
                      </c:if>
-                     <form action="<c:url value="/j_spring_security_check">
+                     <form name='f' action="<c:url value="/login">
                         </c:url>" method="post">
                         <fieldset>
                            <div class="form-group">
                               <input class="form-control" placeholder=
-                                 "User Name" name='j_username' type="text">
+                                 "User Name" name='username' type="text" value="">
                            </div>
                            <div class="form-group">
                               <input class="form-control" placeholder=
-                                 "Password" name='j_password' type="password" value="">
+                                 "Password" name='password' type="password">
                            </div>
                            <input class="btn btn-lg btn-success btn-block"
-                              type="submit" value="Login">
+                              name="submit" type="submit" value="Login">
+                           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </fieldset>
                      </form>
                   </div>
